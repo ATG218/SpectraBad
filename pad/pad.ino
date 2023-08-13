@@ -52,7 +52,7 @@ int Ctwo = C*2;
 
 int pad;
 
-#define buzzer 21 // idk if the buzzer is analog or digital ngl
+#define buzzer 21 
 
 void setup() {
   Serial.begin(9600);
@@ -60,6 +60,23 @@ void setup() {
 }
 
 void loop() {
+  val1 = Sensor1.capacitiveSensor(30);
+  val2 = Sensor2.capacitiveSensor(30);
+  val3 = Sensor3.capacitiveSensor(30);
+  val4 = Sensor4.capacitiveSensor(30);
+  val5 = Sensor5.capacitiveSensor(30);
+  val6 = Sensor6.capacitiveSensor(30);
+  val7 = Sensor7.capacitiveSensor(30);
+  val8 = Sensor8.capacitiveSensor(30);
+  val9 = Sensor9.capacitiveSensor(30);
+  val10 = Sensor10.capacitiveSensor(30);
+  val11 = Sensor11.capacitiveSensor(30);
+  val12 = Sensor12.capacitiveSensor(30);
+  val13 = Sensor13.capacitiveSensor(30);
+  val14 = Sensor14.capacitiveSensor(30);
+  val15 = Sensor15.capacitiveSensor(30);
+  val16 = Sensor16.capacitiveSensor(30);
+  
   if (val1 >= 1000) { pad = 1;}
   if (val2 >= 1000) { pad = 2;}
   if (val3 >= 1000) { pad = 3;}
