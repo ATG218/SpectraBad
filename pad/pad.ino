@@ -45,14 +45,14 @@ int F = 698;
 int Fsharp = 740;
 int G = 784;
 int Gsharp = 831;
-int A2 = (A*2);
-int Bflat2 = (Bflat*2);
-int B2 = (B*2);
-int C2 = (C*2);
+int Atwo = A*2;
+int Bflattwo = Bflat*2;
+int Btwo = B*2;
+int Ctwo = C*2;
 
 int pad;
 
-#define buzzer 21; // idk if the buzzer is analog or digital ngl
+#define buzzer 21 // idk if the buzzer is analog or digital ngl
 
 void setup() {
   Serial.begin(9600);
@@ -115,16 +115,16 @@ void loop() {
       tone(buzzer,Gsharp,1000);
       break;
     case 13:
-      tone(buzzer,A2,1000);
+      tone(buzzer,Atwo,1000);
       break;
     case 14:
-      tone(buzzer,Bflat2,1000);
+      tone(buzzer,Bflattwo,1000);
       break;
     case 15:
-      tone(buzzer,B2,1000);
+      tone(buzzer,Btwo,1000);
       break;
     case 16:
-      tone(buzzer,C2,1000);
+      tone(buzzer,Ctwo,1000);
       break;
   }
 }
