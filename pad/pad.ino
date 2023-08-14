@@ -1,11 +1,12 @@
+#include <SimpleDictionary.h>
 #include <CapacitiveSensor.h>
-#include <map>
-#include <string>
-#include <NewPing.h>
+// defines pins numbers
+const int trigPin = 9;
+const int echoPin = 10;
 
-#define TRIGGER_PIN 9
-#define ECHO_PIN 10
-#define MAX_DISTANCE 400 // Maximum distance we want to measure (in centimeters).
+// defines variables
+long duration;
+int distance;
 
 //define sensors
 CapacitiveSensor Sensor1 = CapacitiveSensor(4, 5);
@@ -47,110 +48,97 @@ long val16;
 int frequency = 110; // A1
 
 //define notes
-std::map<std::string, int> noteFrequencies = {
-    {"A", 440},
-    {"A#", 466},
-    {"B", 494},
-    {"C", 523},
-    {"C#", 554},
-    {"D", 587},
-    {"D#", 622},
-    {"E", 659},
-    {"F", 698},
-    {"F#", 740},
-    {"G", 784},
-    {"G#", 831}
-};
-
-std::map<std::string, int> noteFrequenciesA1 = {
-    {"A1", 55},
-    {"A#1", 58},
-    {"B1", 62},
-    {"C1", 65},
-    {"C#1", 69},
-    {"D1", 73},
-    {"D#1", 78},
-    {"E1", 82},
-    {"F1", 87},
-    {"F#1", 93},
-    {"G1", 98},
-    {"G#1", 104}
-};
+int Aone = 55;
+int Asharpone = 58;
+int Bone = 62;
+int Cone = 65;
+int Csharpone = 69;
+int Done = 73;
+int Dsharpone = 78;
+int Eone = 82;
+int Fone = 87;
+int Fsharpone = 93;
+int Gone = 98;
+int Gsharpone = 104;
 
 // potentiometer
 int potPin = A3; // Potentiometer output connected to analog pin 3
 int potVal = 0; // Variable to store the input from the potentiometer
 
 // defining starting notes
-int pad1 = noteFrequencies["A"];
-int pad2 = noteFrequencies["A#"];
-int pad3 = noteFrequencies["B"];
-int pad4 = noteFrequencies["C"];
-int pad5 = noteFrequencies["C#"];
-int pad6 = noteFrequencies["D"];
-int pad7 = noteFrequencies["D#"];
-int pad8 = noteFrequencies["E"];
-int pad9 = noteFrequencies["F"];
-int pad10 = noteFrequencies["F#"];
-int pad11 = noteFrequencies["G"];
-int pad12 = noteFrequencies["G#"];
-int pad13 = (noteFrequencies["A"]*2);
-int pad14 = (noteFrequencies["A#"]*2);
-int pad15 = (noteFrequencies["B"]*2);
-int pad16 = (noteFrequencies["C"]*2);
+int pad1 = 440;
+int pad2 = 466;
+int pad3 = 494;
+int pad4 = 523;
+int pad5 = 554;
+int pad6 = 587;
+int pad7 = 622;
+int pad8 = 659;
+int pad9 = 698;
+int pad10 = 740;
+int pad11 = 784;
+int pad12 = 831;
+int pad13 = (pad1*2);
+int pad14 = (pad2*2);
+int pad15 = (pad3*2);
+int pad16 = (pad4*2);
 
 // which button was clicked
 int pad;
 int buttonState = 0;  // variable for reading the pushbutton status
 
 // defining input & output
-const int buttonPin = 2;
+const int button = 2;
 #define buzzer 21 
 
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
-
 void ultrasonic() {
-  delay(50);
-  int distance = sonar.ping_cm();
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration * 0.034 / 2;
 }
 
 void setup() {
-  pinMode(button, INPUT);
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
+  pinMode(button, INPUT);
   pinMode(buzzer, OUTPUT);
   Serial.begin(9600);
 }
 
 void loop() {
-  if (digitalRead(buttonPin) == HIGH) {
+  if (digitalRead(button) == HIGH) {
     buttonState = buttonState + 1;
     if (buttonState > 2) {
       buttonState = 0;
     }
   }
   capactivesensors();
-  if (buttonstate == 1) {
+  if (buttonState == 1) {
     potVal = analogRead(potPin);
     potVal = map(potVal,0,1023,2,7);
-    pad1 = (noteFrequenciesA1["A1"]*pow(2,(potVal-1)));
-    pad2 = (noteFrequenciesA1["A#1"]*pow(2,(potVal-1)));
-    pad3 = (noteFrequenciesA1["B1"]*pow(2,(potVal-1)));
-    pad4 = (noteFrequenciesA1["C1"]*pow(2,(potVal-1)));
-    pad5 = (noteFrequenciesA1["C#1"]*pow(2,(potVal-1)));
-    pad6 = (noteFrequenciesA1["D1"]*pow(2,(potVal-1)));
-    pad7 = (noteFrequenciesA1["D#1"]*pow(2,(potVal-1)));
-    pad8 = (noteFrequenciesA1["E1"]*pow(2,(potVal-1)));
-    pad9 = (noteFrequenciesA1["F1"]*pow(2,(potVal-1)));
-    pad10 = (noteFrequenciesA1["F#1"]*pow(2,(potVal-1)));
-    pad11 = (noteFrequenciesA1["G1"]*pow(2,(potVal-1)));
-    pad12 = (noteFrequenciesA1["G#1"]*pow(2,(potVal-1)));
+    pad1 = (Aone*pow(2,(potVal-1)));
+    pad2 = (Asharpone*pow(2,(potVal-1)));
+    pad3 = (Bone*pow(2,(potVal-1)));
+    pad4 = (Cone*pow(2,(potVal-1)));
+    pad5 = (Csharpone*pow(2,(potVal-1)));
+    pad6 = (Done*pow(2,(potVal-1)));
+    pad7 = (Dsharpone*pow(2,(potVal-1)));
+    pad8 = (Eone*pow(2,(potVal-1)));
+    pad9 = (Fone*pow(2,(potVal-1)));
+    pad10 = (Fsharpone*pow(2,(potVal-1)));
+    pad11 = (Gone*pow(2,(potVal-1)));
+    pad12 = (Gsharpone*pow(2,(potVal-1)));
     pad13 = (pad1*2);
     pad14 = (pad2*2);
     pad15 = (pad3*2);
     pad16 = (pad4*2);
     tone(buzzer,pad1);
-  } else if (buttonstate == 2) {
+  } else if (buttonState == 2) {
+    ultrasonic();
     if (distance < 400 && distance > 0) {
       frequency = map(distance,400,0,110,1320); // A1 --> A6 - closer (cm) = higher pitch
       pad1 = (frequency + pad1);
