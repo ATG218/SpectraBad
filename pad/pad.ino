@@ -1,4 +1,3 @@
-#include <SimpleDictionary.h>
 #include <CapacitiveSensor.h>
 // defines pins numbers
 const int trigPin = 9;
